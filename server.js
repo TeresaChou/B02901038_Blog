@@ -2,12 +2,16 @@ const express = require("express");
 // const cors = require("cors");
 const app = express();
 const http = require("http").Server(app);
+const path = require('path');
 const io = require("socket.io")(http);
 const mongoose = require("mongoose");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // app.use(cors());
+
+// serve for react
+app.use(express.static(path.join(__dirname, 'react/build')));
 
 var db = mongoose.connection;
 mongoose.connect( 'mongodb://user:A123456@ds159400.mlab.com:59400/blog' );
@@ -78,6 +82,10 @@ io.on("connection", client => {
    client.on("disconnect", () => {
       console.log("user disconnected.");
    });
+});
+
+app.get('*', (req, res) => {
+     res.sendFile(path.join(__dirname+'/react/build/index.html'));
 });
 
 var port = 3001;
