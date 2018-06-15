@@ -2,12 +2,13 @@
 
 ## Usage:
 
-Start the server in one terminal, in the root directory type:
+Start the server in the root directory:
 ```
-npm run server
+npm start
 ```
-Then start the react in another terminal, in the root directory type:
+In another terminal, go to react/ directory to start the react:
 ```
+cd react
 npm run start
 ```
 
