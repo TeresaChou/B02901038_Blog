@@ -2,11 +2,11 @@
 
 ## Usage:
 
-Start the server in one terminal, type:
+Start the server in one terminal, in the root directory type:
 ```
 npm run server
 ```
-Then start the react in another terminal, type:
+Then start the react in another terminal, in the root directory type:
 ```
 npm run start
 ```
