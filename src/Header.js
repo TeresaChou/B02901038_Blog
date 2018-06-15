@@ -5,8 +5,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import Popup from 'react-popup';
-import './popup';
 
 const styles = {
      root: {
@@ -21,16 +21,8 @@ const styles = {
           },
 };
 
-
 function Header(props) {
    const { classes } = props;
-
-   function Login() {
-      Popup.plugins().Login( () => {
-         props.login();
-      } );
-   }
-
    return (
       <div className={classes.root}>
          <AppBar position="static">
@@ -38,8 +30,7 @@ function Header(props) {
                <Typography variant="title" color="inherit" className={classes.flex}>
                  My Blog
                </Typography>
-               { !props.loginStatus? <Button color="inherit"onClick={Login}>
-                  Login</Button>: null }
+               <Button color="inherit" onClick={login}>Login</Button>
             </Toolbar>
         </AppBar>
       </div>

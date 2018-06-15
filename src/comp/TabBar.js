@@ -7,6 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Block from './Block';
 import Article from './Article';
+import socketIOClient from 'socket.io-client';
 
 function TabContainer(props) {
      return (
@@ -29,13 +30,47 @@ const styles = theme => ({
 });
 
 class TabBar extends React.Component {
-     state = {
-            value: 0,
-     };
+   constructor(props) {
+      super(props);
+      this.state = {
+         value: 0,
+         socket: socketIOClient("http://localhost:3001"),
+         papers: []
+      };
+      this.getPaper = this.getPaper.bind(this);
+   }
    
    handleChange = (event, value) => {
-          this.setState({ value });
+      this.setState({ value });
    };
+
+   getPaper(t, c, d) {
+      var paper = {
+         title: t, 
+         content: c, 
+         date: d
+      };
+      this.setState( prev => { return {
+         papers: [...prev.papers, paper]
+      }; })
+   }
+
+   componentDidMount() {
+      var it = this;
+      this.props.setAdd( (t, c, d) => {
+         this.state.socket.emit("addPaper", t, c, d);
+      });
+      this.state.socket.on("init", artics => {
+         console.log("data", artics);
+         it.setState({
+            papers: artics
+         });
+      });
+      this.state.socket.emit("init");
+      this.state.socket.on("getPaper", (t, c, d) => {
+         this.getPaper(t, c, d);
+      });
+   }
    
    render() {
       const { classes } = this.props;
@@ -51,26 +86,17 @@ class TabBar extends React.Component {
                   textColor="primary"
                   scrollable
                   scrollButtons="auto">
-                  <Tab icon={<Block />}/>
-                  <Tab icon={<Block />}/>
-                  <Tab icon={<Block />}/>
-                  <Tab label="Item Four" />
-                  <Tab label="Item Five" />
-                  <Tab label="Item Six" />
-                  <Tab label="Item Seven" />
+                  { this.state.papers.map( paper => 
+                     <Tab icon={
+                        <Block title={paper.title} content={paper.content} date={paper.date} />}
+                     /> )}
                 </Tabs>
              </AppBar>
-             {value === 0 && <TabContainer>
-                                 <Article />
-                              </TabContainer>}
-            {value === 1 && <TabContainer>
-                                 <Article />
-                              </TabContainer>}
-             {value === 2 && <TabContainer>Item Three</TabContainer>}
-             {value === 3 && <TabContainer>Item Four</TabContainer>}
-             {value === 4 && <TabContainer>Item Five</TabContainer>}
-             {value === 5 && <TabContainer>Item Six</TabContainer>}
-             {value === 6 && <TabContainer>Item Seven</TabContainer>}
+             { this.state.papers.map( (paper, index) => 
+                value === index && <TabContainer>
+                     <Article title={paper.title} content={paper.content} date={paper.date} />
+                   </TabContainer>
+             ) }
          </div>
       );
    }

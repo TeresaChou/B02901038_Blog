@@ -17,7 +17,8 @@ function AddButton(props) {
    const { classes } = props;
    return (
       <div>
-         <Button variant="fab" color="primary" aria-label="add" className={classes.button}>
+         <Button variant="fab" color="primary" aria-label="add"
+            className={classes.button} onClick={props.add} >
             <AddIcon />
          </Button>
       </div>

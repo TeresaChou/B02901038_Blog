@@ -16,13 +16,15 @@
     "react-popup": "^0.9.3",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "1.1.4"
+    "react-scripts": "1.1.4",
+    "socket.io": "^2.1.1",
+    "socket.io-client": "^2.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "server": "nodemon src/server/server.js"
+    "server": "nodemon src/server.js"
   }
 }

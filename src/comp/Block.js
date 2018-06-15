@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 const styles = {
@@ -30,24 +28,18 @@ const styles = {
 
 function Block(props) {
      const { classes } = props;
-     const bull = <span className={classes.bullet}>•</span>;
-   
      return (
         <div>
            <Card className={classes.card}>
               <CardContent>
-                 <Typography className={classes.title} color="textSecondary">
-                     Word of the Day
-                 </Typography>
                  <Typography variant="headline" component="h2">
-                     be{bull}nev{bull}o{bull}lent
+                    {props.title}
                  </Typography>
-                 <Typography className={classes.pos} color="textSecondary">
-                     adjective
+                 <Typography className={classes.pos}>
+                    {props.content.substring(0, 20) + "..."}
                  </Typography>
-                 <Typography component="p">
-                     well meaning and kindly.<br />
-                     {'"a benevolent smile"'}
+                 <Typography component="p" color="textSecondary">
+                    {props.date}
                  </Typography>
                </CardContent>
             </Card>

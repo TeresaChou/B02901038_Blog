@@ -18,10 +18,13 @@ function Article(props) {
       <div>
          <Paper className={classes.root} elevation={4}>
             <Typography variant="headline" component="h3">
-               This is a sheet of paper.
+               {props.title}
+            </Typography>
+            <Typography component="p" color="textSecondary">
+               {props.date}
             </Typography>
             <Typography component="p">
-                Paper can be used to build surface or other elements for your application.
+               {props.content}
             </Typography>
          </Paper>
       </div>
